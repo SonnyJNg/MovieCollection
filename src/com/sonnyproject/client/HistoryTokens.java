@@ -7,4 +7,5 @@ public class HistoryTokens {
 	static final String REQUEST = "request";
 	static final String CONTACT = "contact";
 	static final String LOGIN = "login";
+	static final String USER = "user";
 }

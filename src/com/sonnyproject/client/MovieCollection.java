@@ -1,33 +1,80 @@
 package com.sonnyproject.client;
 
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.Style.Unit;
-import com.google.gwt.event.logical.shared.SelectionEvent;
-import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
-import com.google.gwt.safehtml.shared.SafeHtml;
-import com.google.gwt.safehtml.shared.SimpleHtmlSanitizer;
-import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.History;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.Window.ClosingEvent;
-import com.google.gwt.user.client.Window.ClosingHandler;
-import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.TabLayoutPanel;
-import com.sonnyproject.client.widget.DataField;
-import com.sonnyproject.client.widget.CommentField;
 
 public class MovieCollection implements EntryPoint, ValueChangeHandler<String> {
+
+	MovieCollectionPanel mainPanel = new MovieCollectionPanel();
+	
+	/**
+	 * Entry Point. Add a mainPanel to the RootPanel, and handle any history token that might
+	 * have been present when application started.
+	 */
+    public void onModuleLoad()
+    {
+        RootPanel.get().add(mainPanel, 0, 0);
+    	setUpHistoryManagement();
+    }
+    
+    /**
+     * Register this class as handling history events, and check to see if we already have to do that.
+     */
+	public void setUpHistoryManagement(){
+		// Make this class your history manager (see onValueChange method)
+		History.addValueChangeHandler(this);
+		// Handle any existing history token
+		History.fireCurrentHistoryState();
+	}
+	
+	/**
+	 * Handle any change to the history.
+	 * 
+	 * If there is a change to the history, then a ValueChangeEvent is fired.  This method handles that
+	 * by parsing the found token, and based on the value, it can request the examplePanel shows the
+	 * History example, Layout example, or the introduction screen.
+	 * 
+	 */
+	public void onValueChange(ValueChangeEvent<String> event) {
+		// Get the token from the event
+		String page = event.getValue().trim();
+		// Check if the token is null or empty
+		if ((page == null) || (page.equals(""))){
+			mainPanel.showHomePage();
+		}
+		else if (page.equals(HistoryTokens.HOME)){
+			mainPanel.showHomePage();
+		}
+		else if (page.equals(HistoryTokens.SEARCH)){
+			mainPanel.showSearchPage();
+		}			
+		else if (page.equals(HistoryTokens.INSERT)){
+			mainPanel.showInsertPage();		
+		}
+		else if (page.equals(HistoryTokens.REQUEST)){
+			mainPanel.showRequestPage();
+		}
+		else if (page.equals(HistoryTokens.CONTACT)){
+			mainPanel.showContactPage();
+		}
+		else if (page.equals(HistoryTokens.LOGIN)){
+			mainPanel.showLoginPage();
+		}
+		else if (page.equals(HistoryTokens.USER)){
+			mainPanel.showUserConfigPage();
+		}
+		else{
+			mainPanel.showHomePage();
+		}
+	}
+	
+	
 	/**
 	 * Constant values to keep track of current panel
-	 */
+	 *//*
 	static final int TOKEN_HOME = 0;
 	static final int TOKEN_SEARCH = 1;
 	static final int TOKEN_INSERT = 2;
@@ -35,9 +82,9 @@ public class MovieCollection implements EntryPoint, ValueChangeHandler<String> {
 	static final int TOKEN_CONTACT = 4;
 	static final int TOKEN_LOGIN = 5;
 	static final int TOKEN_USERS = 6;
-	/**
+	*//**
 	 * Tab content
-	 */
+	 *//*
 	static final String TAB_HOME = "Home";
 	static final String TAB_SEARCH = "Search";
 	static final String TAB_INSERT = "Insert";
@@ -45,9 +92,9 @@ public class MovieCollection implements EntryPoint, ValueChangeHandler<String> {
 	static final String TAB_CONTACT = "Contact";
 	static final String TAB_LOGIN = "Login";
 	static final String TAB_USERS = "Users";
-	/**
+	*//**
 	 * Association between history token to tab panel index
-	 */
+	 *//*
 	enum Pages {
 		HOME(TOKEN_HOME, TAB_HOME), SEARCH(TOKEN_SEARCH, TAB_SEARCH), 
 		INSERT(TOKEN_INSERT, TAB_INSERT), REQUEST(TOKEN_REQUEST, TAB_REQUEST),
@@ -122,9 +169,9 @@ public class MovieCollection implements EntryPoint, ValueChangeHandler<String> {
 	HTMLPanel contactPanel;
 	HTMLPanel loginPanel;
 	HTMLPanel usersPanel;
-	/**
+	*//**
 	 * TabLayoutPanel holds the pages of content
-	 */
+	 *//*
 	TabLayoutPanel content;
 	private void buildTabContent() {
 		homePanel = new HTMLPanel(getContent(Pages.HOME.getText()));
@@ -168,15 +215,15 @@ public class MovieCollection implements EntryPoint, ValueChangeHandler<String> {
 		return contactPanel;
 	}
 
-	/**
+	*//**
 	 * Popup panel that allows user to login
-	 */
+	 *//*
 	PopupPanel loginRequest;
 	
-	/**
+	*//**
 	 * Button used for login event trigger
-	 */
-	/*Button login;
+	 *//*
+	Button login;
 	private void wrapExistingLoginButton() {
 		Element elemLogin = DOM.getElementById("Login");
 		if(elemLogin != null){
@@ -187,15 +234,15 @@ public class MovieCollection implements EntryPoint, ValueChangeHandler<String> {
 			login = new Button("Login");
 			RootPanel.get().add(login);
 		}
-	}*/
+	}
 
-	/**
+	*//**
 	 * Image's logo
-	 */
+	 *//*
 	Image logo;
-	/**
+	*//**
 	 * Logo path location
-	 */
+	 *//*
 	private static final String LOGO_IMAGE_NAME = "MovieCollezioneLogo.png";
 	private void insertLogo() {
 		logo = new Image(GWT.getModuleBaseURL() + "../Images/" + LOGO_IMAGE_NAME);
@@ -227,10 +274,10 @@ public class MovieCollection implements EntryPoint, ValueChangeHandler<String> {
 		});
 	}
 	
-	/**
+	*//**
 	 * Panel sits on the right hand side allows to user feedback
-	 */
-	/*FocusPanel feedback;
+	 *//*
+	FocusPanel feedback;
 	
 	private void createFeedbackTab() {
 		// Create the FeedBack tab
@@ -240,14 +287,14 @@ public class MovieCollection implements EntryPoint, ValueChangeHandler<String> {
 		VerticalPanel text = new VerticalPanel();
 		text.add(new Label("FEEDBACK"));
 		feedback.add(text);
-	}*/
+	}
 	
 	private void setUpEventHandling() {
-		/**
+		*//**
 		 *  If a tab is selected then we want to add a new history item to the History object.
 		 *  (this effectively changes the token in the URL, which is detected and handled by 
 		 *  GWT's History sub-system.
-		 */
+		 *//*
 		content.addSelectionHandler(new SelectionHandler<Integer>(){
 			public void onSelection(SelectionEvent<Integer> event) {
 				// Determine the tab that has been selected by interrogating the event object.
@@ -259,11 +306,11 @@ public class MovieCollection implements EntryPoint, ValueChangeHandler<String> {
 		});
 		
 		
-		/**
+		*//**
 		 *  If the login button is clicked, we want to display a little pop-up panel which allows
 		 *  the user to login.
-		 */ 
-		/*login.addClickHandler(new ClickHandler(){
+		 *//* 
+		login.addClickHandler(new ClickHandler(){
 			public void onClick(ClickEvent event) {
 				FlowPanel fLogin;
 				final TextBox txtUserName = new TextBox();
@@ -314,13 +361,13 @@ public class MovieCollection implements EntryPoint, ValueChangeHandler<String> {
 				// who knows where the text would appear.
 				txtUserName.setFocus(true);
 			}			
-		});*/
+		});
 		
-		/**
+		*//**
 		 * If the user moves mouse over feedback tab, change its style 
 		 * (increases its size and changes colour - styles are in BasicProject.css)
-		 */
-		/*feedback.addMouseOverHandler(new MouseOverHandler(){
+		 *//*
+		feedback.addMouseOverHandler(new MouseOverHandler(){
 			public void onMouseOver(MouseOverEvent event) {
 				// Remove existing normal style
 				feedback.removeStyleName("normal");
@@ -329,29 +376,29 @@ public class MovieCollection implements EntryPoint, ValueChangeHandler<String> {
 				// Set overflow of whole HTML page to hidden  to minimise display of scroll bars.
 				RootPanel.getBodyElement().getStyle().setProperty("overflow", "hidden");
 			}
-		});*/
+		});
 		
-		/**
+		*//**
 		 * If use moves mouse out of the feedback panel, return its style to normal
 		 * (decreases its size and changes colour - styles are in BasicProject.css)
-		 */
-		/*feedback.addMouseOutHandler(new MouseOutHandler(){
+		 *//*
+		feedback.addMouseOutHandler(new MouseOutHandler(){
 			public void onMouseOut(MouseOutEvent event) {
 				feedback.removeStyleName("active");
 				feedback.addStyleName("normal");
 				RootPanel.getBodyElement().getStyle().setProperty("overflow", "auto");
 			}
-		});*/
+		});
 		
-		/**
+		*//**
 		 * If user clicks on the feedback tab we should start some feedback functionality.
 		 * In this example, it simply displays an alert to the user.
-		 */
-		/*feedback.addClickHandler(new ClickHandler(){
+		 *//*
+		feedback.addClickHandler(new ClickHandler(){
 			public void onClick(ClickEvent event) {
 				Window.alert("You could provide feedback if this was implemented");
 			}
-		});*/
+		});
 	}
 
 	public void onValueChange(ValueChangeEvent<String> event) {
@@ -413,5 +460,5 @@ public class MovieCollection implements EntryPoint, ValueChangeHandler<String> {
 	
 	private void showUserConfig(){
 		content.selectTab(Pages.USERS.getVal());
-	}
+	}*/
 }
