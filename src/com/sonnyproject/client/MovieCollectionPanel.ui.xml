@@ -34,8 +34,9 @@
 		}
 
 		.divider {
-		height: 10px;
-		background:	#999999;
+		height: 15px;
+		background:
+		#999999;
 		}
 
 		.website {
@@ -61,17 +62,28 @@
 		padding: 10px;
 		border-radius: 25px;
 		height: 50px;
-		width: 50px;
+		width: 75px;
+		position: absolute;
+		top:
+		30px;
+		right: 10px;
+		}
+
+		.loginMessage {
+		padding: 10px;
+		height: 250px;
+		width:
+		75px;
 		position: absolute;
 		top: 35%;
-		right: 0%;
+		right: 5%;
 		}
 
 		.footer {
 		position: fixed;
 		bottom: 0;
 		left: 0;
-		right: 0;		
+		right: 0;
 		}
 	</ui:style>
 
@@ -94,14 +106,6 @@
 					<g:Button addStyleNames="{style.button}" ui:field="insert">Insert
 						Movie</g:Button>
 					<g:HTML styleName="{style.divider}" />
-					<g:Button addStyleNames="{style.button}" ui:field="request">Request
-						Movie</g:Button>
-					<g:HTML styleName="{style.divider}" />
-					<g:Button addStyleNames="{style.button}" ui:field="contact">Contact</g:Button>
-					<g:HTML styleName="{style.divider}" />
-					<g:Button addStyleNames="{style.button}" ui:field="user">User
-						Configuration</g:Button>
-					<g:HTML styleName="{style.divider}" />					
 					<g:HTML addStyleNames="{style.footer}">
 						<footer>
 							<small>&copy; Copyright: Sonny Ng</small>
@@ -113,7 +117,10 @@
 		<g:east size="100">
 			<g:ScrollPanel>
 				<g:FlowPanel>
-					<g:Button ui:field="login" styleName="{style.loginbutton}">Login</g:Button>
+					<g:Label ui:field="welcome" styleName="{style.loginMessage}"
+						text="Hello Guest!" />
+					<g:Button ui:field="login" styleName="{style.loginbutton}"
+						text="Login" />
 				</g:FlowPanel>
 			</g:ScrollPanel>
 		</g:east>
